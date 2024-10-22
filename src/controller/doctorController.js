@@ -31,8 +31,21 @@ let getAllDoctors = async (req, res) => {
 let postInfoDoctor = async (req, res) => {
   try {
     let response = await doctorService.saveDetailInfoDoctor(req.body);
-    console.log("noah check req.body: ",req.body)
-    console.log("noah check response: ",response)
+    console.log("noah check req.body: ", req.body);
+    console.log("noah check response: ", response);
+  } catch (e) {
+    console.log(e);
+    return res.status(200).json({
+      errCode: -1,
+      errMessage: "Error from server",
+    });
+  }
+};
+
+let getDetailDoctorById = async (req, res) => {
+  try {
+    let info = await doctorService.getDetailDoctorById(req.query.id);
+    return res.status(200).json(info);
   } catch (e) {
     console.log(e);
     return res.status(200).json({
@@ -46,4 +59,5 @@ module.exports = {
   getTopDoctorHome: getTopDoctorHome,
   getAllDoctors: getAllDoctors,
   postInfoDoctor: postInfoDoctor,
+  getDetailDoctorById: getDetailDoctorById,
 };

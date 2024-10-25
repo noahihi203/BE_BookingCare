@@ -1,39 +1,39 @@
-'use strict';
+"use strict";
 
 //const sequelize = require("sequelize");
 
 module.exports = {
   up: async (queryInterface, Sequelize) => {
-    await queryInterface.createTable('histories', { 
+    await queryInterface.createTable("histories", {
       id: {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
-        type: Sequelize.INTEGER
+        type: Sequelize.INTEGER,
       },
       patientId: {
-        type: Sequelize.STRING
+        type: Sequelize.STRING,
       },
       doctorId: {
-        type: Sequelize.STRING
+        type: Sequelize.STRING,
       },
       descriptionId: {
-        type: Sequelize.STRING
+        type: Sequelize.STRING,
       },
       files: {
-        type: Sequelize.TEXT
+        type: Sequelize.TEXT,
       },
       createdAt: {
         allowNull: false,
-        type: Sequelize.DATE
+        type: Sequelize.DATE,
       },
       updatedAt: {
         allowNull: false,
-        type: Sequelize.DATE
-      }
+        type: Sequelize.DATE,
+      },
     });
   },
   down: async (queryInterface, Sequelize) => {
-    await queryInterface.dropTable('histories');
-  }
+    await queryInterface.dropTable("histories");
+  },
 };

@@ -1,19 +1,19 @@
-'use strict';
+"use strict";
 
 module.exports = {
-
   up: async (queryInterface, Sequelize) => {
-    return queryInterface.bulkInsert('Users', [{
-      email: 'admin@gmail.com',
-      password: '123456',
-      firstName: 'Noah',
-      lastName: 'Bui',
-      address: 'USA',
-      gender: '1',
-      typeRole: 'ROLE',
-      keyRole: 'R1',
-    }]) 
-
+    return queryInterface.bulkInsert("Users", [
+      {
+        email: "admin@gmail.com",
+        password: "123456",
+        firstName: "Noah",
+        lastName: "Bui",
+        address: "USA",
+        gender: "1",
+        typeRole: "ROLE",
+        keyRole: "R1",
+      },
+    ]);
   },
 
   down: async (queryInterface, Sequelize) => {
@@ -23,5 +23,5 @@ module.exports = {
      * Example:
      * await queryInterface.bulkDelete('People', null, {});
      */
-  }
+  },
 };

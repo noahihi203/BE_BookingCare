@@ -1,3 +1,4 @@
+import { reject } from "lodash";
 import doctorService from "../services/doctorService";
 
 let getTopDoctorHome = async (req, res) => {
@@ -69,10 +70,24 @@ let bulkCreateSchedule = async (req, res) => {
   }
 };
 
+let getScheduleDoctorByDate = async (req, res) => {
+  try {
+    let scheduleData = await doctorService.getScheduleDoctorByDateService(req.query.doctorId, req.query.date);
+    return res.status(200).json(scheduleData)
+  } catch (e) {
+    console.log(e);
+    return res.status(200).json({
+      errCode: -1,
+      errMessage: "Error from server",
+    });
+  }
+};
+
 module.exports = {
   getTopDoctorHome: getTopDoctorHome,
   getAllDoctors: getAllDoctors,
   postInfoDoctor: postInfoDoctor,
   getDetailDoctorById: getDetailDoctorById,
   bulkCreateSchedule,
+  getScheduleDoctorByDate,
 };

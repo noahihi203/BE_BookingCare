@@ -32,8 +32,6 @@ let getAllDoctors = async (req, res) => {
 let postInfoDoctor = async (req, res) => {
   try {
     let response = await doctorService.saveDetailInfoDoctor(req.body);
-    // console.log("noah check req.body: ", req.body);
-    // console.log("noah check response: ", response);
     return res.status(200).json(response);
   } catch (e) {
     console.log(e);
@@ -72,8 +70,11 @@ let bulkCreateSchedule = async (req, res) => {
 
 let getScheduleDoctorByDate = async (req, res) => {
   try {
-    let scheduleData = await doctorService.getScheduleDoctorByDateService(req.query.doctorId, req.query.date);
-    return res.status(200).json(scheduleData)
+    let scheduleData = await doctorService.getScheduleDoctorByDateService(
+      req.query.doctorId,
+      req.query.date
+    );
+    return res.status(200).json(scheduleData);
   } catch (e) {
     console.log(e);
     return res.status(200).json({

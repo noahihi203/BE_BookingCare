@@ -66,13 +66,20 @@ let saveDetailInfoDoctor = (inputData) => {
         !inputData.doctorId ||
         !inputData.contentHTML ||
         !inputData.contentMarkdown ||
-        !inputData.action
+        !inputData.action ||
+        !inputData.selectedPrice ||
+        !inputData.selectedPayment ||
+        !inputData.selectedProvince ||
+        !inputData.nameClinic ||
+        !inputData.addressClinic ||
+        !inputData.note
       ) {
         resolve({
           errCode: 1,
           errMessage: "Missing parameter",
         });
       } else {
+        //upsert to Markdown
         if (inputData.action === "CREATE") {
           await db.Markdown.create({
             contentHTML: inputData.contentHTML,
@@ -92,6 +99,35 @@ let saveDetailInfoDoctor = (inputData) => {
             doctorMarkdown.description = inputData.description;
             await doctorMarkdown.save();
           }
+        }
+        //upsert to Doctor_info table
+        let doctorInfo = await db.Doctor_Infor.findOne({
+          where: {
+            doctorId: inputData.doctorId,
+          },
+          raw: false,
+        });
+        if (doctorInfo) {
+          //update
+          doctorInfo.doctorId = inputData.doctorId,
+          doctorInfo.priceId = inputData.selectedPrice;
+          doctorInfo.paymentId = inputData.selectedPayment;
+          doctorInfo.provinceId = inputData.selectedProvince;
+          doctorInfo.nameClinic = inputData.nameClinic;
+          doctorInfo.addressClinic = inputData.addressClinic;
+          doctorInfo.note = inputData.note;
+          await doctorInfo.save();
+        } else {
+          //create
+          await db.Doctor_Infor.create({
+            doctorId: inputData.doctorId,
+            priceId: inputData.selectedPrice,
+            paymentId: inputData.selectedPayment,
+            provinceId: inputData.selectedProvince,
+            nameClinic: inputData.nameClinic,
+            addressClinic: inputData.addressClinic,
+            note: inputData.note,
+          });
         }
         resolve({
           errCode: 0,

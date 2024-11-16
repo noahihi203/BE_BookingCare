@@ -16,7 +16,7 @@ This is a backend server built with Node.js, using Express as the web framework 
 
 ## Features
 
-- RESTful API design using Express.js.
+- RESTful API design using Express.js
 - ORM-based database management with Sequelize.
 - Environment-based configuration using dotenv.
 - User authentication with bcrypt.

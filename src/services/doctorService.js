@@ -337,12 +337,17 @@ let getProfileDoctorById = (inputId) => {
           attributes: { exclude: ["password"] },
           include: [
             {
+              model: db.Markdown,
+              attributes: ["description", "contentHTML", "contentMarkdown"],
+            },
+            {
               model: db.Allcode,
               as: "positionData",
               attributes: ["valueEn", "valueVi"],
             },
             {
               model: db.Doctor_Infor,
+              as: "Doctor_Infor",
               attributes: {
                 exclude: ["id", "doctorId"],
               },

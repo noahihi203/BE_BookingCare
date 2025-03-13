@@ -4,10 +4,13 @@ let createSpecialty = async (data) => {
   return new Promise(async (resolve, reject) => {
     try {
       if (
-        !data.name ||
+        !data.nameVi ||
+        !data.nameEn ||
         !data.image ||
-        !data.descriptionHTML ||
-        !data.descriptionMarkdown
+        !data.descriptionHTMLVi ||
+        !data.descriptionMarkdownVi ||
+        !data.descriptionHTMLEn ||
+        !data.descriptionMarkdownEn
       ) {
         resolve({
           errCode: -1,
@@ -15,10 +18,13 @@ let createSpecialty = async (data) => {
         });
       } else {
         await db.Specialty.create({
-          name: data.name,
+          nameVi: data.nameVi,
+          nameEn: data.nameEn,
           image: data.image,
-          descriptionHTML: data.descriptionHTML,
-          descriptionMarkdown: data.descriptionMarkdown,
+          descriptionHTMLVi: data.descriptionHTMLVi,
+          descriptionMarkdownVi: data.descriptionMarkdownVi,
+          descriptionHTMLEn: data.descriptionHTMLEn,
+          descriptionMarkdownEn: data.descriptionMarkdownEn,
         });
         resolve({
           errCode: 0,

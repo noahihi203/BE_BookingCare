@@ -61,6 +61,7 @@ let initWebRouters = (app) => {
   );
   //Clinic
   router.post("/api/create-new-clinic", clinicController.createClinic);
+  router.get("/api/get-clinics-list", clinicController.getClinicsList);
   return app.use("/", router);
 };
 

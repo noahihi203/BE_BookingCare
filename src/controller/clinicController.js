@@ -13,9 +13,9 @@ let createClinic = async (req, res) => {
   }
 };
 
-let getAllClinics = async (req, res) => {
+let getClinicsList = async (req, res) => {
   try {
-    let data = await clinicService.getAllClinics();
+    let data = await clinicService.getClinicsList();
     return res.status(200).json(data);
   } catch (e) {
     console.log(e);
@@ -41,6 +41,6 @@ let getDetailClinicById = async (req, res) => {
 
 module.exports = {
   createClinic,
-  getAllClinics,
+  getClinicsList,
   getDetailClinicById
 };

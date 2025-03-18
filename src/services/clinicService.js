@@ -41,18 +41,18 @@ let createClinic = async (data) => {
   });
 };
 
-let getAllClinics = async () => {
+let getClinicsList = async () => {
   return new Promise(async (resolve, reject) => {
     try {
       let data = await db.Clinic.findAll();
       if (data && data.length > 0) {
-        data.map((item) => {
+        data.forEach((item) => {
           item.image = new Buffer(item.image, "base64").toString("binary");
           return item;
         });
       }
       resolve({
-        errMessage: "Get all specialties success!",
+        errMessage: "Get all clinics success!",
         errCode: 0,
         data: data,
       });
@@ -110,6 +110,6 @@ let getDetailClinicById = async (id, location) => {
 
 module.exports = {
   createClinic,
-  getAllClinics,
+  getClinicsList,
   getDetailClinicById,
 };

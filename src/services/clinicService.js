@@ -62,10 +62,11 @@ let getClinicsList = async () => {
   });
 };
 
-let getDetailClinicById = async (id, location) => {
+let getDetailClinicById = async (id) => {
   return new Promise(async (resolve, reject) => {
     try {
-      if (!id || !location) {
+      console.log("Noah check id: ",id);
+      if (!id) {
         resolve({
           errCode: -1,
           errMessage: "Missing required parameters!",
@@ -74,27 +75,22 @@ let getDetailClinicById = async (id, location) => {
         let data = await db.Clinic.findOne({
           where: { id: id },
           attributes: [
+            "nameVi",
+            "nameEn",
+            "addressVi",
+            "addressEn",
             "descriptionHTMLVi",
             "descriptionMarkdownVi",
             "descriptionHTMLEn",
             "descriptionMarkdownEn",
+            "image",
           ],
         });
-
-        if (data) {
-          let doctorSpecialty = [];
-          if (location === "ALL") {
-            doctorSpecialty = await db.Doctor_Infor.findAll({
-              where: { specialtyId: id },
-              attributes: ["doctorId", "provinceId"],
-            });
-          } else {
-            doctorSpecialty = await db.Doctor_Infor.findAll({
-              where: { specialtyId: id, provinceId: location },
-              attributes: ["doctorId", "provinceId"],
-            });
-          }
-          data.doctorSpecialty = doctorSpecialty;
+        if (data && data.length > 0) {
+          data.forEach((item) => {
+            item.image = new Buffer(item.image, "base64").toString("binary");
+            return item;
+          });
         }
         resolve({
           errCode: 0,

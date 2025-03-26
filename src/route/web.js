@@ -66,6 +66,8 @@ let initWebRouters = (app) => {
     "/api/get-detail-clinic-by-id",
     clinicController.getDetailClinicById
   );
+  router.delete("/api/delete-clinic-by-id", clinicController.deleteClinicById);
+  router.put("/api/update-clinic-by-id", clinicController.updateClinicById);
   return app.use("/", router);
 };
 

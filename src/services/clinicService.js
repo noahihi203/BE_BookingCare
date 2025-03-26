@@ -1,5 +1,6 @@
+import { raw } from "body-parser";
 import db from "../models/index";
-
+import _ from "lodash";
 let createClinic = async (data) => {
   return new Promise(async (resolve, reject) => {
     try {
@@ -65,7 +66,6 @@ let getClinicsList = async () => {
 let getDetailClinicById = async (id) => {
   return new Promise(async (resolve, reject) => {
     try {
-      console.log("Noah check id: ",id);
       if (!id) {
         resolve({
           errCode: -1,
@@ -104,8 +104,44 @@ let getDetailClinicById = async (id) => {
   });
 };
 
+let deleteClinicById = async (id) => {
+  return new Promise(async (resolve, reject) => {
+    try {
+      if (!id) {
+        resolve({
+          errCode: -1,
+          errMessage: "Missing required parameters!",
+        });
+      } else {
+        let clinic = await db.Clinic.findOne({
+          where: { id: id },
+          raw: false,
+        });
+        if (clinic) {
+          await clinic.destroy();
+        } else {
+          resolve({
+            errCode: -1,
+            errMessage: "The clinic not found!",
+          });
+        }
+        resolve({
+          errCode: 0,
+          errMessage: "Delete clinic success!",
+        });
+      }
+    } catch (e) {
+      reject(e);
+    }
+  });
+};
+
+let updateClinicById = 
+
 module.exports = {
   createClinic,
   getClinicsList,
   getDetailClinicById,
+  deleteClinicById,
+  updateClinicById
 };

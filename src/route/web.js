@@ -5,6 +5,7 @@ import doctorController from "../controller/doctorController";
 import patientController from "../controller/patientController";
 import specialtyController from "../controller/specialtyController";
 import clinicController from "../controller/clinicController";
+import historyController from "../controller/historyController";
 let router = express.Router();
 
 let initWebRouters = (app) => {
@@ -68,6 +69,17 @@ let initWebRouters = (app) => {
   );
   router.delete("/api/delete-clinic-by-id", clinicController.deleteClinicById);
   router.put("/api/update-clinic-by-id", clinicController.updateClinicById);
+
+  //Histories
+  router.post("/api/create-new-history", historyController.createHistory);
+  router.get("/api/get-histories-list", historyController.getHistoriesList);
+  router.get(
+    "/api/get-detail-history-by-id",
+    historyController.getDetailHistoryById
+  );
+  router.delete("/api/delete-history-by-id", historyController.deleteHistoryById);
+  router.put("/api/update-history-by-id", historyController.updateHistoryById);
+
   return app.use("/", router);
 };
 

@@ -17,8 +17,17 @@ module.exports = {
       doctorId: {
         type: Sequelize.STRING,
       },
-      descriptionId: {
+      descriptionHTMLVi: {
         type: Sequelize.STRING,
+      },
+      descriptionHTMLEn: {
+        type: Sequelize.STRING,
+      },
+      descriptionMarkdownVi: {
+        type: Sequelize.TEXT,
+      },
+      descriptionMarkdownEn: {
+        type: Sequelize.TEXT,
       },
       files: {
         type: Sequelize.TEXT,

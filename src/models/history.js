@@ -15,7 +15,10 @@ module.exports = (sequelize, DataTypes) => {
     {
       patientId: DataTypes.STRING,
       doctorId: DataTypes.STRING,
-      descriptionId: DataTypes.TEXT,
+      descriptionHTMLVi: DataTypes.TEXT,
+      descriptionHTMLEn: DataTypes.TEXT,
+      descriptionMarkdownVi: DataTypes.TEXT,
+      descriptionMarkdownEn: DataTypes.TEXT,
       files: DataTypes.TEXT,
     },
     {

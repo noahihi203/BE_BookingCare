@@ -1,38 +1,34 @@
 import db from "../models/index";
 import _ from "lodash";
-let createClinic = async (data) => {
+let createHistory = async (data) => {
   return new Promise(async (resolve, reject) => {
     try {
       if (
-        !data.nameEn ||
-        !data.nameVi ||
-        !data.addressVi ||
-        !data.addressEn ||
+        !data.patientId ||
+        !data.doctorId ||
         !data.descriptionHTMLVi ||
-        !data.descriptionHTMLEn ||
         !data.descriptionMarkdownVi ||
+        !data.descriptionHTMLEn ||
         !data.descriptionMarkdownEn ||
-        !data.image
+        !data.file
       ) {
         resolve({
           errCode: -1,
           errMessage: "Missing required parameters!",
         });
       } else {
-        await db.Clinic.create({
-          nameVi: data.nameVi,
-          nameEn: data.nameEn,
-          addressVi: data.addressVi,
-          addressEn: data.addressEn,
+        await db.History.create({
+          patientId: data.patientId,
+          doctorId: data.doctorId,
           descriptionHTMLVi: data.descriptionHTMLVi,
           descriptionMarkdownVi: data.descriptionMarkdownVi,
           descriptionHTMLEn: data.descriptionHTMLEn,
           descriptionMarkdownEn: data.descriptionMarkdownEn,
-          image: data.image,
+          file: data.file,
         });
         resolve({
           errCode: 0,
-          errMessage: "Create new clinic success!",
+          errMessage: "Create new History success!",
         });
       }
     } catch (e) {
@@ -41,18 +37,18 @@ let createClinic = async (data) => {
   });
 };
 
-let getClinicsList = async () => {
+let getHistoriesList = async () => {
   return new Promise(async (resolve, reject) => {
     try {
-      let data = await db.Clinic.findAll();
+      let data = await db.History.findAll();
       if (data && data.length > 0) {
         data.forEach((item) => {
-          item.image = new Buffer(item.image, "base64").toString("binary");
+          item.file = new Buffer(item.file, "base64").toString("binary");
           return item;
         });
       }
       resolve({
-        errMessage: "Get all clinics success!",
+        errMessage: "Get all Histories success!",
         errCode: 0,
         data: data,
       });
@@ -62,7 +58,7 @@ let getClinicsList = async () => {
   });
 };
 
-let getDetailClinicById = async (id) => {
+let getDetailHistoryById = async (id) => {
   return new Promise(async (resolve, reject) => {
     try {
       if (!id) {
@@ -71,7 +67,7 @@ let getDetailClinicById = async (id) => {
           errMessage: "Missing required parameters!",
         });
       } else {
-        let data = await db.Clinic.findOne({
+        let data = await db.History.findOne({
           where: { id: id },
           attributes: [
             "nameVi",
@@ -103,7 +99,7 @@ let getDetailClinicById = async (id) => {
   });
 };
 
-let deleteClinicById = async (id) => {
+let deleteHistoryById = async (id) => {
   return new Promise(async (resolve, reject) => {
     try {
       if (!id) {
@@ -112,21 +108,21 @@ let deleteClinicById = async (id) => {
           errMessage: "Missing required parameters!",
         });
       } else {
-        let clinic = await db.Clinic.findOne({
+        let History = await db.History.findOne({
           where: { id: id },
           raw: false,
         });
-        if (clinic) {
-          await clinic.destroy();
+        if (History) {
+          await History.destroy();
         } else {
           resolve({
             errCode: -1,
-            errMessage: "The clinic not found!",
+            errMessage: "The History not found!",
           });
         }
         resolve({
           errCode: 0,
-          errMessage: "Delete clinic success!",
+          errMessage: "Delete History success!",
         });
       }
     } catch (e) {
@@ -135,7 +131,7 @@ let deleteClinicById = async (id) => {
   });
 };
 
-let updateClinicById = async (data) => {
+let updateHistoryById = async (data) => {
   return new Promise(async (resolve, reject) => {
     try {
       if (
@@ -155,29 +151,29 @@ let updateClinicById = async (data) => {
           errMessage: "Missing required parameters!",
         });
       } else {
-        let clinic = await db.Clinic.findOne({
+        let History = await db.History.findOne({
           where: { id: data.id },
           raw: false,
         });
-        if (clinic) {
-          clinic.nameVi = data.nameVi;
-          clinic.nameEn = data.nameEn;
-          clinic.addressVi = data.addressVi;
-          clinic.addressEn = data.addressEn;
-          clinic.descriptionHTMLVi = data.descriptionHTMLVi;
-          clinic.descriptionMarkdownVi = data.descriptionMarkdownVi;
-          clinic.descriptionHTMLEn = data.descriptionHTMLEn;
-          clinic.descriptionMarkdownEn = data.descriptionMarkdownEn;
-          clinic.image = data.image;
-          await clinic.save();
+        if (History) {
+          History.nameVi = data.nameVi;
+          History.nameEn = data.nameEn;
+          History.addressVi = data.addressVi;
+          History.addressEn = data.addressEn;
+          History.descriptionHTMLVi = data.descriptionHTMLVi;
+          History.descriptionMarkdownVi = data.descriptionMarkdownVi;
+          History.descriptionHTMLEn = data.descriptionHTMLEn;
+          History.descriptionMarkdownEn = data.descriptionMarkdownEn;
+          History.image = data.image;
+          await History.save();
           resolve({
             errCode: 0,
-            errMessage: "Update the clinic success!",
+            errMessage: "Update the History success!",
           });
         } else {
           resolve({
             errCode: 1,
-            errMessage: "The clinic not found!",
+            errMessage: "The History not found!",
           });
         }
       }
@@ -188,9 +184,9 @@ let updateClinicById = async (data) => {
 };
 
 module.exports = {
-  createClinic,
-  getClinicsList,
-  getDetailClinicById,
-  deleteClinicById,
-  updateClinicById,
+  createHistory,
+  getHistoriesList,
+  getDetailHistoryById,
+  deleteHistoryById,
+  updateHistoryById,
 };
